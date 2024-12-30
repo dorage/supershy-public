@@ -1,0 +1,17 @@
+{
+    "name": "supershy-monorepo",
+    "version": "1.0.0",
+    "author": "PlayPlease",
+    "license": "ISC",
+    "private": true,
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "dev": "pnpm run --parallel --filter \"./apps/**\" \"/(dev:)/\"",
+        "server:build": "pnpm run --filter ./apps/app-server/ pro:build",
+        "client:dev": "npm run dev -w capacitor"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "lerna": "^8.0.0"
+    }
+}

@@ -1,0 +1,1 @@
+UPDATE versions SET is_enabled = FALSE;

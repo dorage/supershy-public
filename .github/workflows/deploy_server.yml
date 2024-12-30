@@ -1,0 +1,44 @@
+# See https://zellwk.com/blog/github-actions-deploy/ an explanation of this code
+name: deploy
+on:
+  push:
+    branches:
+      - main-server
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Clone Github Repo Action
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+          depth: 1
+          branch: 'main'
+          owner: 'dorage'
+          repository: 'mono'
+          access-token: ${{ secrets.MONO_ACCESS_TOKEN }}
+
+            
+      - run: ls
+      - run: pnpm install
+      - run: pnpm run server:build
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+  
+      - name: Adding Known Hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -r --delete apps/app-server/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/server

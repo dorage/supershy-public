@@ -1,0 +1,25 @@
+{
+    "name": "db-jobs",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rm -rf dist && node ./esbuild.js",
+        "start": "npm run build && node dist/index.mjs"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^8.3.1",
+        "@types/node": "^20.10.4",
+        "app-schema": "workspace:^",
+        "kysely": "^0.26.3",
+        "typescript": "^5.3.3",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "esbuild": "^0.19.8",
+        "esbuild-plugins-node-modules-polyfill": "^1.6.1",
+        "npm-run-all": "^4.1.5",
+        "ts-node": "^10.9.2"
+    }
+}

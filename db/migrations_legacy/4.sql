@@ -1,0 +1,17 @@
+ALTER TABLE users DROP COLUMN email;
+ALTER TABLE users DROP COLUMN apple;
+ALTER TABLE users DROP COLUMN nspn;
+ALTER TABLE poll_answers DROP COLUMN voter_id;
+ALTER TABLE poll_answers DROP COLUMN winner_id;
+
+
+ALTER TABLE users ADD COLUMN email VARCHAR(255)
+  GENERATED ALWAYS AS (TRIM('"' FROM JSON_EXTRACT(auth, '$.email')));
+ALTER TABLE users ADD COLUMN apple VARCHAR(255)
+  GENERATED ALWAYS as (TRIM('"' FROM JSON_EXTRACT(auth, '$.apple')));
+ALTER TABLE users ADD COLUMN nspn CHAR(8)
+  GENERATED ALWAYS as (TRIM('"' FROM JSON_EXTRACT(auth, '$.nspn')));
+ALTER TABLE poll_answers ADD COLUMN voter_id INTEGER
+  GENERATED ALWAYS as (TRIM('"' FROM JSON_EXTRACT(voter, '$.voter_id')));
+ALTER TABLE poll_answers ADD COLUMN winner_id INTEGER
+  GENERATED ALWAYS as (TRIM('"' FROM JSON_EXTRACT(winner, '$.winner_id')));

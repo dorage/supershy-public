@@ -1,0 +1,4 @@
+ALTER TABLE users DROP COLUMN nspn;
+
+ALTER TABLE users ADD COLUMN nspn CHAR(8)
+  GENERATED ALWAYS as (TRIM('"' FROM JSON_EXTRACT(school, '$.nspn')));

@@ -1,0 +1,37 @@
+name = "super-shy"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
+node_compat = true
+
+[[env.test.d1_databases]]
+binding = "DB"
+database_name = "super-shy"
+database_id = "063654c4-a2be-49da-92ca-d472811dc89e"
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "super-shy"
+database_id = "063654c4-a2be-49da-92ca-d472811dc89e"
+
+[[env.prod.d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "super-shy"
+database_id = "063654c4-a2be-49da-92ca-d472811dc89e"
+
+# Docs: https://developers.cloudflare.com/workers/platform/environment-variables
+[env.test.vars]
+MODE = "development"
+PACKAGE_NAME = "playplease.us.supershy"
+
+[env.dev.vars]
+MODE = "development"
+PACKAGE_NAME = "playplease.us.supershy"
+
+[env.prod.vars]
+MODE = "production"
+PACKAGE_NAME = "playplease.us.supershy"
+
+[build]
+command = "nvm use 20.10.0 && npm run build"
+cwd = "dist/index.js"
+watch_dir = "dist/index.js"
